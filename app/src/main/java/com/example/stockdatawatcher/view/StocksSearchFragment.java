@@ -1,9 +1,11 @@
 package com.example.stockdatawatcher.view;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,18 +17,19 @@ import com.example.stockdatawatcher.R;
 import com.example.stockdatawatcher.model.Stock;
 import com.example.stockdatawatcher.presenter.StocksLoader;
 import com.example.stockdatawatcher.presenter.ViewStocksAdapter;
+import com.example.stockdatawatcher.sqlite.DBHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StocksSearchFragment extends Fragment implements ViewStocksAdapter.OnStockClickListener{
-    private final String url = "GCOFJJ20L7GLFYI9";
     private RecyclerView recyclerView;
     private ViewStocksAdapter adapter;
     private List<Stock> stocks;
     private SearchView searchView;
 
     private StocksLoader loader = StocksLoader.getInstance();
+    private DBHelper DB;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,7 +38,9 @@ public class StocksSearchFragment extends Fragment implements ViewStocksAdapter.
         View view = inflater.inflate(R.layout.fragment_stocksearch, container, false);
 
         initializeViews(view);
+        DB = new DBHelper(view.getContext());
         setAdapter(view);
+        populateSearch();
         setUpSearchListener();
 
         return view;
@@ -53,6 +58,28 @@ public class StocksSearchFragment extends Fragment implements ViewStocksAdapter.
 
         adapter = new ViewStocksAdapter(view.getContext(), stocks, this::onItemClick);
         recyclerView.setAdapter(adapter);
+    }
+
+    private void populateSearch() {
+        Cursor cursor = DB.getPortfolioData();
+
+        if (cursor.getCount() == 0) {
+            Toast.makeText(getContext(), "No Stocks in Portfolio", Toast.LENGTH_SHORT).show();
+        }
+
+        else {
+            while (cursor.moveToNext()) {
+                String symbol =cursor.getString(0);
+                int amount = cursor.getInt(1);
+                double price = cursor.getFloat(2);
+                Stock stock = new Stock(symbol);
+                stock.setAmount(amount);
+                stock.setPrice(price);
+
+                stocks.add(stock);
+            }
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void setUpSearchListener(){

@@ -50,13 +50,11 @@ public class ViewStocksAdapter extends RecyclerView.Adapter<ViewStocksAdapter.My
                 if (invalidCharSequence(charSequence)){
                     filterResults.values = getStocksFilter;
                     filterResults.count = getStocksFilter.size();
-                }else{
+                }
+                else {
                     String searchStr = charSequence.toString().toLowerCase();
-                    List<Stock> newStocks;
-
-                    newStocks = loader.getStocksBasedOnKeyword(requestQueue, searchStr);
-
-                    displayStocks();
+                    List<Stock> newStocks = new ArrayList<>();
+                    getItemsFromFilter(newStocks, searchStr);
 
                     filterResults.values = newStocks;
                     filterResults.count = newStocks.size();
@@ -96,8 +94,9 @@ public class ViewStocksAdapter extends RecyclerView.Adapter<ViewStocksAdapter.My
 
         Stock stock = stocks.get(position);
 
-        holder.SymbolTextView.setText(stocks.get(position).getSymbol());
-        holder.CompanyTextView.setText(stocks.get(position).getCompany());
+        holder.SymbolTextView.setText(stock.getSymbol());
+        holder.AmountTextView.setText("Amount Owned: " + stock.getAmount());
+        holder.ValueTextView.setText("Value: " + stock.getPrice() * stock.getAmount());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,15 +115,27 @@ public class ViewStocksAdapter extends RecyclerView.Adapter<ViewStocksAdapter.My
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView CompanyTextView, SymbolTextView;
+        TextView AmountTextView, SymbolTextView, ValueTextView;
         CardView stockCard;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            this.CompanyTextView = itemView.findViewById(R.id.CompanyTextView);
+            this.AmountTextView = itemView.findViewById(R.id.AmountTextView);
             this.SymbolTextView = itemView.findViewById(R.id.SymbolTextView);
+            this.ValueTextView = itemView.findViewById(R.id.ValueTextView);
             this.stockCard = itemView.findViewById(R.id.stockCard);
+        }
+    }
+
+    private boolean findMatch(Stock stock, String searchStr) {
+        return stock.getSymbol().toLowerCase().contains(searchStr.toLowerCase());
+    }
+
+    private void getItemsFromFilter(List<Stock> newStocks, String searchStr) {
+        for (Stock stock: getStocksFilter){
+            if (findMatch(stock, searchStr)) {
+                newStocks.add(stock);
+            }
         }
     }
 
@@ -132,14 +143,4 @@ public class ViewStocksAdapter extends RecyclerView.Adapter<ViewStocksAdapter.My
         return (charSequence == null || charSequence.length() == 0);
     }
 
-    private boolean findMatch(Stock stock, String searchStr) {
-        return stock.getCompany().toLowerCase().contains(searchStr) ||
-                stock.getSymbol().contains(searchStr);
-    }
-
-    private void displayStocks(){
-        for (int i = 0 ; i < stocks.size(); i ++) {
-            System.out.println(stocks.get(i).getCompany());
-        }
-    }
 }

@@ -9,6 +9,8 @@ public class Stock {
     private int volume;
     private double high;
     private double low;
+    private boolean exists;
+    private int amount;
 
     public Stock(String symbol) {
         this.symbol = symbol;
@@ -82,4 +84,19 @@ public class Stock {
     public void setLow(double low) {
         this.low = low;
     }
+
+    public boolean isExists() {
+        return exists;
+    }
+    public void setExists(boolean exists) {
+        this.exists = exists;
+    }
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 }
+

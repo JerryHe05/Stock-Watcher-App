@@ -28,7 +28,7 @@ public class HomeFragment extends Fragment {
         viewStocksButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new StocksSearchFragment());
+                loadFragment(new AddStockFragment());
             }
         });
 
