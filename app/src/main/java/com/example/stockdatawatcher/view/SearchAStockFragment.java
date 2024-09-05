@@ -38,18 +38,7 @@ public class SearchAStockFragment extends Fragment implements StocksLoader.Stock
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_onestock, container, false);
-
-        stockPriceTextView = view.findViewById(R.id.stockPriceTextView);
-        changeTextView = view.findViewById(R.id.changePercentTextView);
-        lastUpdatedTextView = view.findViewById(R.id.lastUpdatedTextView);
-        volumeTextView = view.findViewById(R.id.volumeTextView);
-        highTextView = view.findViewById(R.id.highTextView);
-        lowTextView = view.findViewById(R.id.lowTextView);
-
-        updateButton = view.findViewById(R.id.updateButton);
-        symbol = view.findViewById(R.id.symbolName);
-        requestQueue = Volley.newRequestQueue(view.getContext());
-        loader.setApiCallback(this);
+        initializeViews(view);
 
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +48,7 @@ public class SearchAStockFragment extends Fragment implements StocksLoader.Stock
                 Stock stock = new Stock(companyString, symbolString);
                 if(!symbolString.isEmpty())
                 {
-                    loader.fetchStockPrice(requestQueue, stock);
+                    loader.fetchStockInfo(requestQueue, stock);
                 }
                 else {
                     Toast.makeText(view.getContext(), "Please enter a valid symbol", Toast.LENGTH_SHORT).show();
@@ -71,12 +60,26 @@ public class SearchAStockFragment extends Fragment implements StocksLoader.Stock
     }
 
     @Override
-    public void displayStockData(Stock stock) {
+    public void performQueryResult(Stock stock) {
         stockPriceTextView.setText(String.format("%2f", stock.getPrice()));
         changeTextView.setText("Change Percent: " + stock.getChangePercent());
         lastUpdatedTextView.setText("Last Updated: " + stock.getLastUpdated());
         volumeTextView.setText("Volume: " + stock.getVolume());
         highTextView.setText("High: " + stock.getHigh());
         lowTextView.setText("Low: " + stock.getLow());
+    }
+
+    private void initializeViews(View view) {
+        stockPriceTextView = view.findViewById(R.id.stockPriceTextView);
+        changeTextView = view.findViewById(R.id.changePercentTextView);
+        lastUpdatedTextView = view.findViewById(R.id.lastUpdatedTextView);
+        volumeTextView = view.findViewById(R.id.volumeTextView);
+        highTextView = view.findViewById(R.id.highTextView);
+        lowTextView = view.findViewById(R.id.lowTextView);
+
+        updateButton = view.findViewById(R.id.updateButton);
+        symbol = view.findViewById(R.id.symbolName);
+        requestQueue = Volley.newRequestQueue(view.getContext());
+        loader.setApiCallback(this);
     }
 }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="@color/sky_blue">
+    
+    <TextView
+        android:id="@+id/EnterInfoTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add to Portfolio"
+        android:gravity="center"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:layout_margin="24dp"/>
+
+    <EditText
+        android:id="@+id/StockSymbolEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:layout_below="@+id/EnterInfoTextView"
+        android:hint="Symbol: e.g. IBM" />
+    <EditText
+        android:id="@+id/StockAmountEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:layout_below="@+id/StockSymbolEditText"
+        android:hint="Amount: e.g. 50" />
+    
+    <Button
+        android:id="@+id/AddStockButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Purchase"
+        android:textSize="24dp"
+        android:layout_below="@+id/StockAmountEditText"
+        android:backgroundTint="@color/dark_blue"/>
+
+    <Button
+        android:id="@+id/ViewPortfolioButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Portfolio"
+        android:textSize="24dp"
+        android:layout_below="@+id/AddStockButton"
+        android:backgroundTint="@color/dark_blue" />
+
+
+</RelativeLayout>

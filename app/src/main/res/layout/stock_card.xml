@@ -26,14 +26,26 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/CompanyTextView"
+            android:id="@+id/AmountTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/SymbolTextView"
             android:layout_alignParentStart="true"
             android:layout_marginStart="23dp"
             android:layout_marginLeft="8dp"
-            android:text="Company"
+            android:text="Amount: "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/ValueTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/AmountTextView"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="23dp"
+            android:layout_marginLeft="8dp"
+            android:text="Value ($): "
             android:textColor="@color/black"
             android:textSize="20sp" />
 

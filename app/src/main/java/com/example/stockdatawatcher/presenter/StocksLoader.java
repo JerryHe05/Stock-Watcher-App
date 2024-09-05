@@ -14,13 +14,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 // Singleton to load stocks
 public final class StocksLoader {
 
     // Note free keys have up to 25 queries a day
     // use demo key "demo" for examples given on the Alphavantage documentation
+    //private final String key = "demo";
     private final String key = "GCOFJJ20L7GLFYI9";
     private static StocksLoader loader;
     private StockApiCallback apiCallback;
@@ -30,7 +30,7 @@ public final class StocksLoader {
     }
 
     public interface StockApiCallback {
-        void displayStockData(Stock stock);
+        void performQueryResult(Stock stock);
     }
 
     public void setApiCallback(StockApiCallback apiCallback) {
@@ -83,7 +83,7 @@ public final class StocksLoader {
         return stocks;
     }
 
-    public void fetchStockPrice(RequestQueue requestQueue, Stock stock) {
+    public void fetchStockInfo(RequestQueue requestQueue, Stock stock) {
         String thisURL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + stock.getSymbol() + "&apikey=" + key;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, thisURL, null,
                 new Response.Listener<JSONObject>() {
@@ -108,7 +108,8 @@ public final class StocksLoader {
                             String stockLow = response.getJSONObject("Global Quote").getString("04. low");
                             stock.setLow(Double.parseDouble(stockLow));
 
-                            apiCallback.displayStockData(stock);
+                            stock.setExists(true);
+                            apiCallback.performQueryResult(stock);
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
