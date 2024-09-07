@@ -9,6 +9,16 @@
     android:padding="15dp"
     android:background="@color/sky_blue">
 
+    <TextView
+        android:id="@+id/stockNameText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="48sp"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/symbolName"
         android:layout_width="match_parent"
