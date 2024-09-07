@@ -23,7 +23,7 @@ import com.example.stockdatawatcher.presenter.StocksLoader;
 
 public class SearchAStockFragment extends Fragment implements StocksLoader.StockApiCallback {
     TextView stockPriceTextView, changeTextView, lastUpdatedTextView, volumeTextView,
-            highTextView, lowTextView;
+            highTextView, lowTextView, stockNameText;
     EditText symbol;
     Button updateButton;
     String symbolString, companyString;
@@ -61,6 +61,8 @@ public class SearchAStockFragment extends Fragment implements StocksLoader.Stock
 
     @Override
     public void performQueryResult(Stock stock) {
+
+        stockNameText.setText(stock.getSymbol() + " Stock Info");
         stockPriceTextView.setText(String.format("%2f", stock.getPrice()));
         changeTextView.setText("Change Percent: " + stock.getChangePercent());
         lastUpdatedTextView.setText("Last Updated: " + stock.getLastUpdated());
@@ -70,6 +72,7 @@ public class SearchAStockFragment extends Fragment implements StocksLoader.Stock
     }
 
     private void initializeViews(View view) {
+        stockNameText = view.findViewById(R.id.stockNameText);
         stockPriceTextView = view.findViewById(R.id.stockPriceTextView);
         changeTextView = view.findViewById(R.id.changePercentTextView);
         lastUpdatedTextView = view.findViewById(R.id.lastUpdatedTextView);
