@@ -21,7 +21,7 @@ import com.example.stockdatawatcher.R;
 import com.example.stockdatawatcher.model.Stock;
 import com.example.stockdatawatcher.presenter.StocksLoader;
 
-public class SearchAStockFragment extends Fragment implements StocksLoader.StockApiCallback {
+public class SearchAStockFragment extends Fragment implements StocksLoader.StockApiCallback, IView {
     TextView stockPriceTextView, changeTextView, lastUpdatedTextView, volumeTextView,
             highTextView, lowTextView, stockNameText;
     EditText symbol;
@@ -62,7 +62,7 @@ public class SearchAStockFragment extends Fragment implements StocksLoader.Stock
     @Override
     public void performQueryResult(Stock stock) {
 
-        stockNameText.setText(stock.getSymbol() + " Stock Info");
+        changeSymbolText(stock.getSymbol());
         stockPriceTextView.setText(String.format("%2f", stock.getPrice()));
         changeTextView.setText("Change Percent: " + stock.getChangePercent());
         lastUpdatedTextView.setText("Last Updated: " + stock.getLastUpdated());
@@ -84,5 +84,13 @@ public class SearchAStockFragment extends Fragment implements StocksLoader.Stock
         symbol = view.findViewById(R.id.symbolName);
         requestQueue = Volley.newRequestQueue(view.getContext());
         loader.setApiCallback(this);
+    }
+
+    public void changeSymbolText(String symbol) {
+        stockNameText.setText(symbol + " Stock Info");
+    }
+
+    public String getSymbolString(){
+        return symbolString;
     }
 }

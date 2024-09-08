@@ -1,6 +1,6 @@
 package com.example.stockdatawatcher.model;
 
-public class Stock {
+public class Stock implements IModel {
     private String symbol;
     private String company;
     private double price;

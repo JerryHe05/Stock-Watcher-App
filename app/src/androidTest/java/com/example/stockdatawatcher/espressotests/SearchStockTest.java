@@ -1,4 +1,4 @@
-package com.example.stockdatawatcher.view;
+package com.example.stockdatawatcher.espressotests;
 
 
 import static androidx.test.espresso.Espresso.onView;
@@ -24,6 +24,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
 import com.example.stockdatawatcher.R;
+import com.example.stockdatawatcher.view.MainActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
