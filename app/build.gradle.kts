@@ -43,4 +43,8 @@ dependencies {
     implementation("com.android.volley:volley:1.2.1")
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    //testImplementation("org.mockito:mockito-inline:")  // includes "core"
+    //testImplementation("org.mockito:mockito-junit-jupiter:")
+    testImplementation("org.mockito:mockito-core:5.13.0")
+    androidTestImplementation("org.mockito:mockito-android:5.13.0")
 }

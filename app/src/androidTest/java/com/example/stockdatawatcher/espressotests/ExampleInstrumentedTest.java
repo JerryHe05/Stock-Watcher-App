@@ -1,4 +1,4 @@
-package com.example.stockdatawatcher;
+package com.example.stockdatawatcher.espressotests;
 
 import android.content.Context;
 
