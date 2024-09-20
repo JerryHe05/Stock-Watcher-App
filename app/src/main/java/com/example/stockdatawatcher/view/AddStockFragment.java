@@ -39,7 +39,7 @@ public class AddStockFragment extends Fragment implements StocksLoader.StockApiC
             @Override
             public void onClick(View view) {
                 symbolString = symbolEditText.getText().toString();
-                if (isInteger(amountEditText.getText().toString())) {
+                if (isPositiveInteger(amountEditText.getText().toString())) {
                     amount = Integer.parseInt(amountEditText.getText().toString());
                     Stock stock = new Stock(symbolString);
                     if (!symbolString.isEmpty()) {
@@ -72,10 +72,10 @@ public class AddStockFragment extends Fragment implements StocksLoader.StockApiC
         requestQueue = Volley.newRequestQueue(view.getContext());
         loader.setApiCallback(this);
     }
-    private boolean isInteger(String input) {
+    private boolean isPositiveInteger(String input) {
         try {
-            Integer.parseInt(input);
-            return true;
+            int val = Integer.parseInt(input);
+            return val > 0;
         }
         catch(NumberFormatException e) {
             return false;
